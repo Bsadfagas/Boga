@@ -1,0 +1,1236 @@
+-- CUSTOM MODE PNB
+PNBWithGaut = false                -- fale if you want pnb no gaut
+
+-- LOCK ONWER SETTING
+WorldDetecting = "x"               -- meet bot here
+
+-- BOT SETTING
+BotAccount = true                  -- false if want use guest account  
+
+-- WORLD PNB
+World_PNB = "X"              -- world name 
+World_PNB_ID = "X"           -- id door  
+kordinatX = 28                     -- position pnb x in rgt
+kordinatY = 24                     -- position pnb y in rgt 
+
+-- CUSTOM AUTO USE PICKAXE
+AutoTakePickaxe = false            -- custom take pickaxe
+Pickaxe_Storage = "X"        -- world name
+Pickaxe_Storage_ID = "X" --id door               
+
+-- TREE ID
+Block_ID = 4584                    -- block id
+Seed_ID = 4585                     -- seed id
+
+-- BLOCK STORAGE
+Block_Storage = "X"                -- take block here
+Block_Storage_ID = "X"             -- id door
+
+-- SEED STORAGE
+SeedAmountToSave = 190             -- bot will save seed when have 190 at bp
+Seed_Storage = "X"                 -- save seed here
+Seed_Storage_ID = "X"              -- id door
+BGFGPOS_Drop_Seed = 4584           -- position drop
+
+-- PACK STORAGE
+Pack_Storage = "X"                 -- save pack here
+Pack_Storage_ID = "X"              -- id door
+BGFGPOS_Drop_Pack = 16             -- position drop
+
+-- DELAY SETTING
+delayjoinWorld = 5000              -- delay join world
+delayjoinIDDoor = 4000             -- delay join id door
+delayPlace = 150                   -- delay place
+delayBreak = 200                   -- delay break
+
+-- GEMS SETTINGS 
+Pack_Name = "world_lock"           -- debug pack name
+Pack_Price = 2000                  -- pack price per buy
+Pack_Item_ID = {242}               -- pack item id
+Total_Pack_Item = 1                -- all total item id
+Pack_Counting = 242                -- id item for scan in pack storage (only need 1 id)
+minimal_gems = 2000                -- minimal gems to buy pack
+
+-- CUSTOM TILE PNB
+Tile_PNB = 5                       -- only can 5 tile
+
+--> TRASH SETTING
+TrashList = {5024,5026,5028, 5032, 5034, 5036, 5038, 5040, 5042, 5044, 7162, 7164} -- id trash item
+
+-- WEBHOOK SETTING
+editWebhook = false                 -- false if you want to use spam webhook
+webhookURL = "X"                    -- url webhook
+messageId = 112989397561300177      -- message id webhook 
+
+Player = {"ZonaDatang", "x"}
+firstupdated = os.time()
+found = true
+function WebInfo(desc)
+  if not editWebhook then
+    local BotInfo2 = "<:huh:976112065775284264> | Bot Name : ||" .. getBot().name .. [[
+|| 
+<:heart_monitor:1026439742973280307> | Bot Status : ]] .. getBot().status .. ", 1 = Online (" .. getBot():getPing() .. [[
+) 
+<:redgems:1051473166087749682> | Bot Gems : ]] .. getBot().gem_count .. [[
+ 
+<:wrench:985492363751342190> | Bot Level : ]] .. getBot().level .. [[
+ 
+<:guarded:1031906221919309835> | Bot Captcha : ]] .. getBot().captcha_status .. [[
+ 
+<:growtopia_clock:1011929976628596746> | Bot Up Time : ]] .. SecondTT(os.difftime(os.time(), startT))
+    local RDPInfo2 = [[
+<:CPU:994981162588053565> | RDP CPU : $cpu% 
+<:RAM:996159529966391377> | RDP Ram : $ram MB 
+<:sc:1034751373041999872> | RDP Date : ]] .. os.date("%d") .. " " .. os.date("%B") .. " " .. os.date("%Y") .. [[
+  
+<:ip:1038500058062143660> | RDP IP : ||$ip||]]
+    local ActivityInfo2 = "<:megapon:909757469306261504> | Activity Info : **" .. desc .. [[
+** 
+<:Centang:1066726931539693578> | First Updated : <t:]] .. firstupdated .. [[
+:f> 
+<:Centang:1066726931539693578> | Last Updated : <t:]] .. os.time() .. ":f>"
+    local WorldInfo2 = "<:wold:909756145202233355> | Current World : ||" .. getBot():getWorld().name .. [[
+|| 
+<:posil:989484591029026867> | Fossil : ]] .. fossil(3918) .. ""
+    local text2 = "            $webHookUrl = \"" .. webhookURL .. [[
+"
+            $ip = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $(Get-NetConnectionProfile | Select-Object -ExpandProperty InterfaceIndex) | Select-Object -ExpandProperty IPAddress
+            $cpu = (Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select Average).Average
+            $ram = (Get-Counter '\Memory\Available MBytes').CounterSamples.CookedValue
+            $thumbnailObject = @{
+            }
+            $footerObject = @{
+                text = "]] .. os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 25200) .. [[
+"
+            }
+            $fieldArray = @(
+                @{
+                    name = "ACTIVITY INFORMATION"
+                    value = "]] .. ActivityInfo2 .. [[
+"
+                    inline = "false"
+                }
+                @{
+                    name = "BOT INFORMATION"
+                    value = "]] .. BotInfo2 .. [[
+"
+                    inline = "false"
+                }
+                @{
+                    name = "WORLD INFORMATION"
+                    value = "]] .. WorldInfo2 .. [[
+"
+                    inline = "false"
+                }
+                @{
+                    name = "RDP INFORMATION"
+                    value = "]] .. RDPInfo2 .. [[
+"
+                    inline = "false"
+                }
+            )
+            $embedObject = @{
+                title = "<a:Zorn_BluxDC:978651473170808842>**RH PNB LUCIFER LOG v1.1**<a:Zorn_BluxDC:978651473170808842>"
+                color = "16777215"
+                thumbnail = $thumbnailObject
+                footer = $footerObject
+                fields = $fieldArray
+            }
+            $embedArray = @($embedObject)
+            $payload = @{
+                embeds = $embedArray
+            }
+            [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+            Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
+        ]]
+    local file2 = io.popen("powershell -command -", "w")
+    file2:write(text2)
+    file2:close()
+  end
+  if editWebhook then
+    local BotInfo = "<:huh:976112065775284264> | Bot Name : ||" .. getBot().name .. [[
+|| 
+<:heart_monitor:1026439742973280307> | Bot Status : ]] .. getBot().status .. ", 1 = Online (" .. getBot():getPing() .. [[
+) 
+<:redgems:1051473166087749682> | Bot Gems : ]] .. getBot().gem_count .. [[
+ 
+<:wrench:985492363751342190> | Bot Level : ]] .. getBot().level .. [[
+ 
+<:guarded:1031906221919309835> | Bot Captcha : ]] .. getBot().captcha_status .. [[
+ 
+<:growtopia_clock:1011929976628596746> | Bot Up Time : ]] .. SecondTT(os.difftime(os.time(), startT))
+    local RDPInfo = [[
+<:CPU:994981162588053565> | RDP CPU : $cpu% 
+<:RAM:996159529966391377> | RDP Ram : $ram MB 
+<:sc:1034751373041999872> | RDP Date : ]] .. os.date("%d") .. " " .. os.date("%B") .. " " .. os.date("%Y") .. [[
+  
+<:ip:1038500058062143660> | RDP IP : ||$ip||]]
+    local ActivityInfo = "<:megapon:909757469306261504> | Activity Info : **" .. desc .. [[
+** 
+<:Centang:1066726931539693578> | First Updated : <t:]] .. firstupdated .. [[
+:f> 
+<:Centang:1066726931539693578> | Last Updated : <t:]] .. os.time() .. ":f>"
+    local WorldInfo = "<:wold:909756145202233355> | Current World : ||" .. getBot():getWorld().name .. [[
+|| 
+<:posil:989484591029026867> | Fossil : ]] .. fossil(3918) .. ""
+    local text = "        $webHookUrl = \"" .. webhookURL .. "/messages/" .. messageId .. [[
+"
+        $ip = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $(Get-NetConnectionProfile | Select-Object -ExpandProperty InterfaceIndex) | Select-Object -ExpandProperty IPAddress
+        $cpu = (Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select Average).Average
+        $ram = (Get-Counter '\Memory\Available MBytes').CounterSamples.CookedValue
+        $footerObject = @{
+            text = "]] .. os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 25200) .. [[
+"
+        }
+        $fieldArray = @(
+            @{
+                name = "ACTIVITY INFORMATION"
+                value = "]] .. ActivityInfo .. [[
+"
+                inline = "false"
+            }
+            @{
+                name = "BOT INFORMATION"
+                value = "]] .. BotInfo .. [[
+"
+                inline = "false"
+            }
+            @{
+                name = "WORLD INFORMATION"
+                value = "]] .. WorldInfo .. [[
+"
+                inline = "false"
+            }
+            @{
+                name = "RDP INFORMATION"
+                value = "]] .. RDPInfo .. [[
+"
+                inline = "false"
+            }
+        )
+        $embedObject = @{
+            title = "<a:Zorn_BluxDC:978651473170808842>**RH PNB LUCIFER LOG v1.1**<a:Zorn_BluxDC:978651473170808842>"
+            color = "16777215"
+            footer = $footerObject
+            fields = $fieldArray
+        }
+        $embedArray = @($embedObject)
+        $payload = @{
+            embeds = $embedArray
+        }
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Patch -ContentType 'application/json'
+    ]]
+    local file = io.popen("powershell -command -", "w")
+    file:write(text)
+    file:close()
+  end
+end
+function LockOwner()
+  while not found do
+    for _, own in pairs(Player) do
+      for _, plr in pairs(getBot():getWorld():getPlayers()) do
+        if plr.name == own then
+          sleep(1000)
+          found = true
+          getBot():say("Owner Found")
+          break
+        end
+      end
+    end
+  end
+  sleep(1000)
+end
+function StartTrashing()
+  for i, trash in pairs(TrashList) do
+    if getBot():getInventory():findItem(trash) > 0 then
+      getBot():sendPacket(2, [[
+action|trash
+|itemID|]] .. trash)
+      sleep(500)
+      getBot():sendPacket(2, [[
+action|dialog_return
+dialog_name|trash_item
+itemID|]] .. trash .. [[
+|
+count|]] .. getBot():getInventory():findItem(trash))
+      sleep(500)
+    end
+  end
+end
+startT = os.time()
+function SecondTT(seconds)
+  local seconds = tonumber(seconds)
+  if seconds <= 0 then
+    return "00:00:00"
+  else
+    hours = string.format("%02.f", math.floor(seconds / 3600))
+    mins = string.format("%02.f", math.floor(seconds / 60 - hours * 60))
+    secs = string.format("%02.f", math.floor(seconds - hours * 3600 - mins * 60))
+    return hours .. ":" .. mins .. ":" .. secs .. " "
+  end
+end
+function fossil(id)
+  local m = 0
+  for _, til in pairs(getBot():getWorld():getTiles()) do
+    if til.fg == id then
+      m = m + 1
+    end
+  end
+  return m
+end
+function SeedsScanner(ItemID)
+  local Counter = 0
+  for _, object in pairs(getBot():getWorld():getObjects()) do
+    if object.id == ItemID then
+      Counter = Counter + object.count
+    end
+  end
+  return Counter
+end
+function SeedsScannerWhenHT(ItemID2)
+  local Counter = 0
+  for _, object in pairs(getBot():getWorld():getObjects()) do
+    if object.id == ItemID2 then
+      Counter = Counter + object.count
+    end
+  end
+  return Counter
+end
+function TakeTree()
+  getBot().auto_collect = false
+  sleep(1000)
+  getBot():sendPacket(3, [[
+action|join_request
+name|]] .. Block_Storage .. [[
+
+invitedWorld|0]])
+  sleep(delayjoinWorld)
+  getBot():sendPacket(3, [[
+action|join_request
+name|]] .. Block_Storage .. "|" .. Block_Storage_ID .. [[
+
+invitedWorld|0]])
+  sleep(delayjoinIDDoor)
+  for _, obj in pairs(getBot():getWorld():getObjects()) do
+    if obj.id == Block_ID and 0 == getBot():getInventory():findItem(Block_ID) then
+      repeat
+        local x = math.floor((obj.x + 10) / 32)
+        local y = math.floor((obj.y + 10) / 32)
+        getBot():findPath(x, y)
+        sleep(200)
+        getBot():collect(2)
+        sleep(500)
+      until getBot():getInventory():findItem(Block_ID) >= 1 or getBot():getInventory():findItem(Block_ID) == 200
+      sleep(1000)
+      getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. [[
+
+invitedWorld|0]])
+      sleep(delayjoinWorld)
+      getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+      sleep(delayjoinIDDoor)
+      RekonekStatus()
+      CustomPNB()
+    elseif 0 == SeedsScannerWhenHT(Block_ID) and 0 == getBot():getInventory():findItem(Block_ID) then
+      sleep(2000)
+      WebInfo("Bot Disconnect (Storage World = 0 Block)")
+      sleep(5000)
+      getBot():disconnect()
+      sleep(1000)
+      getBot().auto_reconnect = false
+      sleep(3500)
+      repeat
+        sleep(30000)
+      until 1 == getBot().status
+    end
+  end
+end
+function PNBTreeCustomWithGaut()
+  if 1 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree1Gaut()
+  end
+  if 2 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree2Gaut()
+  end
+  if 3 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree3Gaut()
+  end
+  if 4 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree4Gaut()
+  end
+  if 5 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree5Gaut()
+  end
+end
+function PNBTreeCustom()
+  if 1 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree1()
+  end
+  if 2 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree2()
+  end
+  if 3 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree3()
+  end
+  if 4 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree4()
+  end
+  if 5 == Tile_PNB then
+    GoToPosPNB()
+    PNBTree5()
+  end
+end
+function CheckInven()
+  if getBot():getInventory():findItem(Seed_ID) > SeedAmountToSave and getBot():getInventory():findItem(Block_ID) > 0 then
+    RekonekStatus()
+    DroppingSeeds()
+  end
+  if getBot().gem_count > minimal_gems and getBot():getInventory():findItem(Block_ID) > 0 then
+    RekonekStatus()
+    BuyingPack()
+  end
+end
+function place(xOffset, yOffset, itemID)
+  local player = getBot():getWorld():getLocal()
+  local x = math.floor(player.posx / 32) + xOffset
+  local y = math.floor(player.posy / 32) + yOffset
+  getBot():place(x, y, itemID)
+end
+function hitt(xOffset, yOffset)
+  local player = getBot():getWorld():getLocal()
+  local x = math.floor(player.posx / 32) + xOffset
+  local y = math.floor(player.posy / 32) + yOffset
+  getBot():hit(x, y)
+end
+function PNBTree5Gaut()
+  getBot().auto_collect = true
+  sleep(100)
+  while true do
+    if getBot():getInventory():findItem(Block_ID) >= 1 then
+      RekonekStatus()
+      place(2, -2, Block_ID)
+      sleep(delayPlace)
+      place(1, -2, Block_ID)
+      sleep(delayPlace)
+      place(0, -2, Block_ID)
+      sleep(delayPlace)
+      place(-1, -2, Block_ID)
+      sleep(delayPlace)
+      place(-2, -2, Block_ID)
+      sleep(delayPlace)
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) + 2, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      hitt(2, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) + 2, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      hitt(2, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) + 1, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      hitt(1, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) + 1, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      hitt(1, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      hitt(0, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      hitt(0, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) - 1, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      hitt(-1, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) - 1, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      hitt(-1, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) - 2, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      hitt(-2, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) - 2, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      hitt(-2, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    if 0 == getBot():getInventory():findItem(Block_ID) then
+      RekonekStatus()
+      TakeTree()
+    end
+    if not (getBot():getInventory():findItem(Block_ID) >= 1) then
+      break
+    end
+  end
+end
+function GoToPosPNB()
+  if getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32)) ~= kordinatX - 1 and getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posy / 32)) ~= kordinatY - 1 then
+    getBot():findPath(kordinatX - 1, kordinatY - 1)
+    sleep(3000)
+  end
+end
+function PNBTree5()
+  getBot().auto_collect = true
+  sleep(100)
+  while true do
+    if getBot():getInventory():findItem(Block_ID) >= 1 then
+      RekonekStatus()
+      CheckInven()
+      place(2, -2, Block_ID)
+      sleep(delayPlace)
+      place(1, -2, Block_ID)
+      sleep(delayPlace)
+      place(0, -2, Block_ID)
+      sleep(delayPlace)
+      place(-1, -2, Block_ID)
+      sleep(delayPlace)
+      place(-2, -2, Block_ID)
+      sleep(delayPlace)
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) + 2, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      CheckInven()
+      hitt(2, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) + 2, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      CheckInven()
+      hitt(2, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) + 1, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      CheckInven()
+      hitt(1, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) + 1, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      CheckInven()
+      hitt(1, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      CheckInven()
+      hitt(0, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      CheckInven()
+      hitt(0, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) - 1, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      CheckInven()
+      hitt(-1, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) - 1, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      CheckInven()
+      hitt(-1, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) - 2, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).bg do
+      RekonekStatus()
+      CheckInven()
+      hitt(-2, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    while getBot():getInventory():findItem(Block_ID) >= 1 and 0 ~= getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32) - 2, math.floor(getBot():getWorld():getLocal().posy / 32) - 2).fg do
+      RekonekStatus()
+      CheckInven()
+      hitt(-2, -2)
+      sleep(delayBreak)
+      if 6 == getBot():getWorld():getTile(math.floor(getBot():getWorld():getLocal().posx / 32), math.floor(getBot():getWorld():getLocal().posy / 32)).fg then
+        sleep(2000)
+        getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+        sleep(delayjoinIDDoor)
+        getBot():findPath(kordinatX - 1, kordinatY - 1)
+        sleep(2000)
+      end
+    end
+    if getBot():getInventory():findItem(Seed_ID) > SeedAmountToSave then
+      RekonekStatus()
+      DroppingSeeds()
+    end
+    if getBot().gem_count > minimal_gems then
+      RekonekStatus()
+      BuyingPack()
+    end
+    if 0 == getBot():getInventory():findItem(Block_ID) then
+      RekonekStatus()
+      TakeTree()
+    end
+    if not (getBot():getInventory():findItem(Block_ID) >= 1) then
+      break
+    end
+  end
+end
+function CheckErcon()
+  if 1 == getBot().status then
+    WebInfo("Bot Online (Successfully To Reconnect)")
+    sleep(5000)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinIDDoor)
+    CustomPNB()
+  elseif 1 ~= getBot().status then
+    WebInfo("Bot Still Offline (Check Your Bot Or Proxy)")
+    sleep(5000)
+    repeat
+      sleep(5000)
+    until 1 == getBot().status
+    sleep(2000)
+    WebInfo("Ouh Bot Online (Successfully To Reconnect)")
+    sleep(5000)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinIDDoor)
+    CustomPNB()
+  end
+end
+function RekonekStatus()
+  if 1 ~= getBot().status then
+    WebInfo("Bot Offline (Trying To Reconnected)")
+    sleep(5000)
+    CheckErcon()
+  end
+end
+function RestTimeBotProsess()
+  if 15 == CooldownTimeRESTT then
+    sleep(900000)
+  end
+  if 30 == CooldownTimeRESTT then
+    sleep(1800000)
+  end
+  if 60 == CooldownTimeRESTT then
+    sleep(3600000)
+  end
+  if 90 == CooldownTimeRESTT then
+    sleep(5400000)
+  end
+  if 120 == CooldownTimeRESTT then
+    sleep(7200000)
+  end
+  if 10 == CooldownTimeRESTT then
+    sleep(600000)
+  end
+  if 5 == CooldownTimeRESTT then
+    sleep(300000)
+  end
+  if 3 == CooldownTimeRESTT then
+    sleep(180000)
+  end
+end
+function RestTimeBotProses()
+  if 15 == CooldownTimeREST then
+    sleep(900000)
+  end
+  if 30 == CooldownTimeREST then
+    sleep(1800000)
+  end
+  if 60 == CooldownTimeREST then
+    sleep(3600000)
+  end
+  if 90 == CooldownTimeREST then
+    sleep(5400000)
+  end
+  if 120 == CooldownTimeREST then
+    sleep(7200000)
+  end
+  if 10 == CooldownTimeREST then
+    sleep(600000)
+  end
+  if 5 == CooldownTimeREST then
+    sleep(300000)
+  end
+  if 3 == CooldownTimeREST then
+    sleep(180000)
+  end
+end
+function DroppingSeeds()
+  getBot().auto_collect = false
+  sleep(100)
+  if getBot():getInventory():findItem(Seed_ID) > 190 then
+    sleep(2000)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. Seed_Storage .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinWorld)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. Seed_Storage .. "|" .. Seed_Storage_ID .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinIDDoor)
+    for _, tile in pairs(getBot():getWorld():getTiles()) do
+      if tile.fg == BGFGPOS_Drop_Seed or tile.bg == BGFGPOS_Drop_Seed then
+        getBot():findPath(tile.x - 1, tile.y)
+        sleep(2000)
+      end
+    end
+  end
+  while getBot():getInventory():findItem(Seed_ID) > 190 do
+    sleep(500)
+    getBot():drop(Seed_ID, getBot():getInventory():getItemCount(Seed_ID))
+    sleep(3500)
+    getBot():moveTo(-1, 0)
+    sleep(2000)
+  end
+  if 0 == getBot():getInventory():findItem(Seed_ID) then
+    sleep(1000)
+    WebInfo("" .. SeedsScanner(Seed_ID) .. " Total Seed Droped")
+    sleep(5000)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinWorld)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinIDDoor)
+    StartTrashing()
+    RekonekStatus()
+    CustomPNB()
+  end
+end
+function BuyingPack()
+  getBot().auto_collect = false
+  sleep(100)
+  if getBot().gem_count > minimal_gems then
+    sleep(2000)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. Pack_Storage .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinWorld)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. Pack_Storage .. "|" .. Pack_Storage_ID .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinIDDoor)
+    for _, tile in pairs(getBot():getWorld():getTiles()) do
+      if tile.fg == BGFGPOS_Drop_Pack or tile.bg == BGFGPOS_Drop_Pack then
+        getBot():findPath(tile.x - 1, tile.y)
+        sleep(2000)
+      end
+    end
+  end
+  if getBot().gem_count > minimal_gems then
+    BuyThePack()
+    DropThePack()
+    sleep(1000)
+    WebInfo("" .. SeedsScanner(Pack_Counting) .. " Total Pack Droped")
+    sleep(5000)
+  end
+  if getBot().gem_count < Pack_Price then
+    sleep(1000)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinWorld)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinIDDoor)
+    StartTrashing()
+    RekonekStatus()
+    CustomPNB()
+  end
+end
+function BuyThePack()
+  if getBot().gem_count >= Pack_Price then
+    while getBot().gem_count >= Pack_Price do
+      getBot():sendPacket(2, [[
+action|buy
+item|]] .. Pack_Name)
+      sleep(2000)
+    end
+  end
+end
+function DropThePack()
+  for _, listpack in pairs(Pack_Item_ID) do
+    while getBot():getInventory():findItem(listpack) > 0 do
+      getBot():sendPacket(2, [[
+action|drop
+|itemID|]] .. listpack)
+      sleep(1000)
+      getBot():sendPacket(2, [[
+action|dialog_return
+dialog_name|drop_item
+itemID|]] .. listpack .. [[
+|
+count|]] .. getBot():getInventory():findItem(listpack))
+      sleep(2000)
+      getBot():moveTo(-1, 0)
+      sleep(2000)
+    end
+  end
+end
+function TakePickaxe()
+  getBot().auto_collect = false
+  sleep(100)
+  if AutoTakePickaxe and 0 == getBot():getInventory():findItem(98) then
+    WebInfo("Bot Taking Pickaxe At ||" .. Pickaxe_Storage .. "||")
+    sleep(5000)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. Pickaxe_Storage .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinWorld)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. Pickaxe_Storage .. "|" .. Pickaxe_Storage_ID .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinIDDoor)
+    for _, obj in pairs(getBot():getWorld():getObjects()) do
+      if 98 == obj.id and 0 == getBot():getInventory():findItem(98) then
+        repeat
+          local x = math.floor((obj.x + 10) / 32)
+          local y = math.floor((obj.y + 10) / 32)
+          getBot():findPath(x, y)
+          sleep(2000)
+          getBot():collect(2)
+          sleep(500)
+        until getBot():getInventory():findItem(98) >= 1
+        sleep(1000)
+        getBot():wear(98)
+        sleep(1500)
+        getBot():moveTo(-1, 0)
+        sleep(2000)
+        dropp()
+        sleep(3500)
+      elseif 0 == SeedsScannerWhenHT(98) and 0 == getBot():getInventory():findItem(98) then
+        sleep(2000)
+        WebInfo("Bot Disconnect (Pickaxe Storage = 0 Pickaxe)")
+        sleep(5000)
+        getBot():disconnect()
+        sleep(3500)
+        getBot().auto_reconnect = false
+        sleep(3500)
+        repeat
+          sleep(30000)
+        until 1 == getBot().status
+      end
+    end
+  end
+  if AutoTakePickaxe and getBot():getInventory():findItem(98) >= 1 then
+    sleep(3500)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinWorld)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. World_PNB .. "|" .. World_PNB_ID .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinIDDoor)
+    RekonekStatus()
+  end
+end
+function dropp()
+  itemid = 98
+  icount = getBot():getInventory():findItem(itemid)
+  getBot():sendPacket(2, [[
+action|drop
+|itemID|]] .. itemid)
+  getBot():sendPacket(2, [[
+action|dialog_return
+dialog_name|drop_item
+itemID|]] .. itemid .. [[
+|
+count|]] .. icount - 1)
+end
+function CustomPNB()
+  if PNBWithGaut then
+    PNBFunctionWithGaut()
+  end
+  if not PNBWithGaut then
+    PNBFunctionNOGaut()
+  end
+end
+function PNBFunctionWithGaut()
+  if 0 == getBot():getInventory():findItem(Block_ID) then
+    TakeTree()
+  end
+  if getBot():getInventory():findItem(Block_ID) >= 1 then
+    PNBTreeCustomWithGaut()
+  end
+end
+function PNBFunctionNOGaut()
+  if 0 == getBot():getInventory():findItem(Block_ID) then
+    TakeTree()
+  end
+  if getBot():getInventory():findItem(Block_ID) >= 1 then
+    PNBTreeCustom()
+  end
+end
+function puncc()
+  for i = 4, 1, -1 do
+    hitt(1, 0)
+    sleep(200)
+  end
+end
+function sekiptutorpick()
+  sleep(2000)
+  getBot():sendPacket(2, "ftue_start_popup_close")
+  sleep(3000)
+  getBot():moveTo(5, 0)
+  sleep(1000)
+  getBot():moveTo(5, 0)
+  sleep(1000)
+  getBot():moveTo(7, -3)
+  sleep(1000)
+  getBot():enter()
+  sleep(3000)
+  getBot():moveTo(2, 0)
+  sleep(1000)
+  getBot():moveTo(5, 0)
+  sleep(1000)
+  puncc()
+  place(1, 0, 2)
+  sleep(1000)
+  puncc()
+  getBot().auto_collect = true
+  sleep(1000)
+  place(1, 0, 3)
+  sleep(1000)
+  place(1, 0, 10672)
+  sleep(1000)
+  hitt(1, 0)
+  sleep(2000)
+  getBot():wear(48)
+  sleep(1000)
+  getBot().auto_collect = false
+  sleep(1000)
+  getBot():sendPacket(3, "action|quit_to_exit")
+  sleep(1000)
+  totTxt = ""
+  for i = 19, 1, -1 do
+    totTxt = totTxt .. string.char(math.random(97, 122))
+  end
+  getBot():sendPacket(3, [[
+action|join_request
+name|]] .. totTxt .. [[
+
+invitedWorld|0]])
+  sleep(delayjoinWorld)
+  place(0, -1, 9640)
+  sleep(5000)
+end
+function AllFunctions()
+  if not BotAccount then
+    sekiptutorpick()
+    sleep(1000)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. WorldDetecting .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinWorld)
+    LockOwner()
+    getBot().collect_range = 3
+    sleep(100)
+  elseif BotAccount then
+    sleep(500)
+    getBot():sendPacket(3, [[
+action|join_request
+name|]] .. WorldDetecting .. [[
+
+invitedWorld|0]])
+    sleep(delayjoinWorld)
+    LockOwner()
+    getBot().collect_range = 3
+    sleep(100)
+  end
+  if getBot().gem_count > minimal_gems then
+    BuyingPack()
+  end
+  if getBot():getInventory():findItem(Seed_ID) > 190 then
+    DroppingSeeds()
+  end
+  if 1 == getBot().status then
+    sleep(1000)
+    getBot():warp(World_PNB)
+    sleep(4500)
+    getBot():warp(World_PNB, World_PNB_ID)
+    sleep(5000)
+    WebInfo("Bot Starting PNB At ||" .. World_PNB .. "||")
+    sleep(5000)
+    TakePickaxe()
+    RekonekStatus()
+    CustomPNB()
+  end
+end
+AllFunctions()
